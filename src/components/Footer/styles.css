@@ -1,0 +1,25 @@
+.Footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 30px;
+    text-align: center;
+}
+
+.Footer p {
+    position: relative;
+    display: flex;
+    flex-flow: row;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+
+.Footer p svg {
+    margin: 0 10px;
+    font-size: 1.2rem;
+}
+
+.Footer p span {
+    font-weight: bolder;
+}
