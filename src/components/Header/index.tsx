@@ -1,9 +1,12 @@
 import React from 'react'
 
+// CSS styles
+import './styles.css'
+
 function Header() {
     return (
-        <div>
-            <h1>Tic do Tac do Toe</h1>
+        <div className="Header">
+            <h1>Tic Tac Toe</h1>
         </div>
     )
 }
