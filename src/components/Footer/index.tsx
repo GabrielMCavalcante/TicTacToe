@@ -3,8 +3,18 @@ import React from 'react'
 // Icons
 import { FaCopyright } from 'react-icons/fa'
 
+// CSS styles
+import './styles.css'
+
 function Footer() {
-    return <p><FaCopyright /> Gabriel Cavalcante 2020</p>
+    return (
+        <div className="Footer">
+            <p>
+                <FaCopyright />
+                <span>Gabriel Cavalcante 2020</span>
+            </p>
+        </div>
+    )
 }
 
 export default Footer
