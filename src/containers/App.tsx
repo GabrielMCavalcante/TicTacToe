@@ -3,6 +3,7 @@ import { Route, Switch } from 'react-router-dom'
 
 // Components
 import Header from 'components/Header'
+import Menu from 'components/Menu'
 import Footer from 'components/Footer'
 
 // CSS styles
@@ -13,7 +14,7 @@ function App() {
     <div className="App">
       <Header />
       <Switch>
-        {/* <Route exact path="/" component={Menu}/> */}
+        <Route exact path="/" component={Menu}/>
         {/* <Route exact path="/pvp" component={PvpMenu}/> */}
         {/* <Route exact path="/pve" component={PveMenu}/> */}
         {/* <Route exact path="/game" component={Game}/> */}
