@@ -1,0 +1,7 @@
+.Controls {
+    width: 30%;
+    margin: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;   
+}
