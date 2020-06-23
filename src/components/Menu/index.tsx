@@ -1,8 +1,5 @@
 import React from 'react'
 
-// Containers
-import GameTable from 'containers/GameTable'
-
 // Components
 import Controls from 'components/UI/Controls'
 
@@ -19,7 +16,6 @@ function Menu() {
     return (
         <div className="Menu">
             <Controls numberOfControls={config.length} controlConfig={config}/>
-            <GameTable />
         </div>
     )
 }
