@@ -27,11 +27,11 @@ function PveConfig(props: RouteChildrenProps) {
     ]
 
     const difficultyConfig = [
-        { label: 'Option 1', value: '1' },
-        { label: 'Option 2', value: '2' },
-        { label: 'Option 3', value: '3' },
-        { label: 'Option 4', value: '4' },
-        { label: 'Option 5', value: '5' },
+        { label: 'Easy', value: '0.25' },
+        { label: 'Normal', value: '0.50' },
+        { label: 'Hard', value: '0.75' },
+        { label: 'Very Hard', value: '0.90' },
+        { label: 'Expert', value: '1.00' }
     ]
 
     return (
@@ -48,7 +48,7 @@ function PveConfig(props: RouteChildrenProps) {
 
             <div className="configField">
                 <p>Choose difficulty</p>
-                <Selector options={difficultyConfig} defaultValue="1"/>
+                <Selector options={difficultyConfig} defaultValue="0.25"/>
             </div>
 
             <div className="configField">
