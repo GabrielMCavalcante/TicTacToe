@@ -1,0 +1,6 @@
+.TableTile {
+    width: calc(var(--tableSize) / 3);
+    height: calc(var(--tableSize) / 3);
+    background-color: #fff;
+    margin: 2px;
+}
