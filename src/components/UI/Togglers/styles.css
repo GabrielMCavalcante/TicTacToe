@@ -1,0 +1,24 @@
+.Togglers .Toggler {
+    text-transform: uppercase;
+    width: 250px;
+    height: 50px;
+    padding: .5rem 1rem;
+    margin: .5rem .2rem;
+    outline: none;
+    text-align: center;
+    text-decoration: none;
+    background-color: #077d92;
+    transition: background-color 500ms linear;
+    cursor: pointer;
+    border: none;
+}
+
+.Togglers .Toggler:hover {
+    text-decoration: none;
+    color: inherit;
+    background-color: #0b91a8;
+}
+
+.Togglers .Toggler.Active {
+    background-color: #0bc577;
+}
