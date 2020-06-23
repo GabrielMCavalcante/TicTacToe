@@ -1,0 +1,12 @@
+:root {
+    --tableSize: 360px;
+}
+
+.GameTable {
+    width: var(--tableSize);
+    margin: 30px auto;
+}
+
+.TableRow {
+    display: flex;
+}
