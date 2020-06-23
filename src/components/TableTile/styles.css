@@ -3,4 +3,15 @@
     height: calc(var(--tableSize) / 3);
     background-color: #1ebbd6;
     margin: 2px;
+    font-family: 'Mallanna', sans-serif;
+    font-weight: bolder;
+    font-size: 6.5rem;
+    text-align:  center;
+    line-height: calc(var(--tableSize) / 3);
+    user-select: none;
+}
+
+.TableTile.Placeable {
+    cursor: pointer;
+    color: rgba(0,0,0,.15);
 }
