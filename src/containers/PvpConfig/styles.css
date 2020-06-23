@@ -1,0 +1,8 @@
+.PvpConfig .configField {
+    width: 1000px;
+    margin: 10px auto 0;
+}
+
+.PvpConfig .configField p {
+    font-size: 1.3rem;
+}
