@@ -1,0 +1,44 @@
+.GameResults {
+    width: 300px;
+    margin: auto;
+    font-size: 1.5rem;
+}
+
+.GameResults .Results {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.GameResults .Results .ResultField {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.GameResults .Results .FieldSeparator {
+    width: 4px;
+    height: 100px;
+    border-radius: 8px;
+    background-color: #192c44;
+}
+
+.GameResults .Results .ResultField span {
+    font-family: 'Mallanna', sans-serif;
+    font-weight: bolder;
+    font-size: 2rem;
+}
+
+.GameResults .Options {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.GameResults .Options button {
+    font-size: 1rem;
+    height: 70px;
+}
