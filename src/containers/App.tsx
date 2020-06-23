@@ -8,6 +8,7 @@ import Footer from 'components/Footer'
 
 // Containers
 import GameTable from 'containers/GameTable'
+import PvpConfig from 'containers/PvpConfig'
 
 // CSS styles
 import './App.css'
@@ -18,8 +19,8 @@ function App() {
       <Header />
       <Switch>
         <Route exact path="/" component={Menu}/>
-        {/* <Route exact path="/pvp" component={PvpMenu}/> */}
-        {/* <Route exact path="/pve" component={PveMenu}/> */}
+        <Route path="/pvp" component={PvpConfig}/>
+        {/* <Route exact path="/pve" component={PveConfig}/> */}
         {/* <Route exact path="/game" component={Game}/> */}
         {/* <Route exact path="/game/results" component={GameResults}/> */}
       </Switch>
