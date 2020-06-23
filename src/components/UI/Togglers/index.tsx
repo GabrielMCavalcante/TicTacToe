@@ -1,13 +1,16 @@
-import React, { useRef } from 'react'
+import React, { useRef, useEffect } from 'react'
 
 // CSS styles
 import './styles.css'
+
+type DefaultSelected = "first" | "second"
 
 interface TogglerConfig {
     togglerConfig: {
         name: string,
         onclick: (...params: any[]) => void
-    }[]
+    }[], 
+    defaultSelected: DefaultSelected
 }
 
 function Togglers(props: TogglerConfig) {
@@ -35,6 +38,25 @@ function Togglers(props: TogglerConfig) {
                 }
         }
     }
+
+    useEffect(() => {
+        switch(props.defaultSelected) {
+            case "first":
+                {
+                    const select = toggler1Ref.current as unknown as HTMLButtonElement
+                    select.classList.add('Active')
+                    props.togglerConfig[0].onclick()
+                    break
+                }
+            case "second":
+                {
+                    const select = toggler2Ref.current as unknown as HTMLButtonElement
+                    select.classList.add('Active')
+                    props.togglerConfig[1].onclick()
+                    break
+                }
+        }
+    }, [toggler1Ref, toggler2Ref, props.defaultSelected, props.togglerConfig])
 
     return (
         <div className="Togglers">
