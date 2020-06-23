@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useRef } from 'react'
 
 // CSS styles
 import './styles.css'
@@ -14,16 +14,53 @@ interface ID {
 
 function TableTile(props: ID) {
 
+    const tileRef = useRef(null)
+    let test: string = ''
+    const classes = ["TableTile"]
+
     function onTileClickHandler() {
-        console.log('Clicked tile with id ', props.id)
-        // onTableClick(id) <- redux dispatch
+
+        const el = tileRef.current as unknown as HTMLDivElement
+        if (el.classList.contains('Placeable')) {
+            console.log('Clicked tile with id ', props.id)
+            // onTableClick(props.id) <- redux dispatch
+        }
+    }
+
+    if (Math.floor(Math.random() * 100) > 40) {
+        classes.push("Placeable")
+    }
+
+    if (classes.length === 1) {
+        if (Math.random() > 0.5) {
+            test = 'X'
+        } else test = 'O'
+    }
+
+    function hoverStartHandler() {
+        const el = tileRef.current as unknown as HTMLDivElement
+        if (el.classList.contains('Placeable')) {
+            if (Math.random() > 0.5) {
+                el.innerHTML = 'X'
+            } else el.innerHTML = 'O'
+        }
+    }
+
+    function hoverEndHandler() {
+        const el = tileRef.current as unknown as HTMLDivElement
+        if (el.classList.contains('Placeable')) {
+            el.innerHTML = ''
+        }
     }
 
     return (
         <div
+            ref={tileRef}
+            onMouseEnter={hoverStartHandler}
+            onMouseLeave={hoverEndHandler}
             onClick={onTileClickHandler}
-            className="TableTile"
-        >{/* tile from redux */}</div>
+            className={classes.join(' ')}
+        >{test}</div>
     )
 }
 
