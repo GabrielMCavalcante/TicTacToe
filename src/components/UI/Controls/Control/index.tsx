@@ -9,7 +9,12 @@ interface ControlConfig {
 }
 
 function Control(props: ControlConfig) {
-    return <button className="Control" onClick={props.onclick}>{ props.name }</button>
+    return (
+        <button
+            className="Control"
+            onClick={props.onclick}
+        >{props.name}</button>
+    )
 }
 
 export default Control
