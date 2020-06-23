@@ -1,17 +1,20 @@
 import React from 'react'
 
+import { RouteChildrenProps } from 'react-router-dom'
+
 // Components
 import Controls from 'components/UI/Controls'
 
 // CSS styles
 import './styles.css'
 
-function Menu() {
+
+function Menu(props: RouteChildrenProps) {
 
     const config = [
-        { name: 'Player vs Player', onclick: () => {/* set gamemode to pvpOptions */}},
+        { name: 'Player vs Player', onclick: () => {props.history.push('/pvp')/* set gamemode to pvpOptions */}},
         { name: 'Player vs Computer', onclick: () => { /* set gamemode to pveOptions */ }}
-    ]
+    ]    
 
     return (
         <div className="Menu">
