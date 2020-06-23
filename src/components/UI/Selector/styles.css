@@ -5,7 +5,6 @@
     border: 2px solid #192c44;
     border-radius: 8px;
     cursor: pointer;
-    user-select: none;
 }
 
 .Selector .Selected {
