@@ -13,7 +13,7 @@ function Menu(props: RouteChildrenProps) {
 
     const config = [
         { name: 'Player vs Player', onclick: () => {props.history.push('/pvp')/* set gamemode to pvpOptions */}},
-        { name: 'Player vs Computer', onclick: () => { /* set gamemode to pveOptions */ }}
+        { name: 'Player vs Computer', onclick: () => {props.history.push('/pve')/* set gamemode to pveOptions */ }}
     ]    
 
     return (
