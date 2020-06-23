@@ -6,6 +6,9 @@ import Header from 'components/Header'
 import Menu from 'components/Menu'
 import Footer from 'components/Footer'
 
+// Containers
+import GameTable from 'containers/GameTable'
+
 // CSS styles
 import './App.css'
 
@@ -20,6 +23,7 @@ function App() {
         {/* <Route exact path="/game" component={Game}/> */}
         {/* <Route exact path="/game/results" component={GameResults}/> */}
       </Switch>
+      <GameTable />
       <Footer />
     </div>
   )
