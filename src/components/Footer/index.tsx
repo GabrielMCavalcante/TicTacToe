@@ -8,12 +8,12 @@ import './styles.css'
 
 function Footer() {
     return (
-        <div className="Footer">
+        <footer className="Footer">
             <p>
                 <FaCopyright />
                 <span>Gabriel Cavalcante 2020</span>
             </p>
-        </div>
+        </footer>
     )
 }
 
