@@ -16,7 +16,7 @@ interface Props {
 
 function Controls(props: Props) {
 
-    const controls = []
+    const controls: JSX.Element[] = []
 
     for (let i = 0; i < props.numberOfControls; i++) {
         controls.push(
