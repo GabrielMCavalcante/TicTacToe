@@ -1,6 +1,15 @@
 import React, { useState, useEffect } from 'react'
 import { FaCaretDown } from 'react-icons/fa'
 
+// Redux connection
+import { connect } from 'react-redux'
+
+// Actions
+import actions from 'store/actions/selector'
+
+// Interfaces
+import StoreState from 'interfaces/store-state'
+
 // CSS styles
 import './styles.css'
 
@@ -9,27 +18,20 @@ interface Option {
     label: string
 }
 
-interface Options {
-    options: Option[],
-    defaultValue: string
-}
+function Selector(props: any) {
 
-function Selector(props: Options) {
+    const { options, defaultValue, gameState, onApplyDifficulty } = props
 
-    const defaultOption = props.options
-        .filter(option => option.value === props.defaultValue)[0]
+    const defaultOption = options
+        .filter((option: Option) => option.value === defaultValue)[0]
 
     const [label, setLabel] = useState(defaultOption.label)
     const [value, setValue] = useState(defaultOption.value)
     const [openCaret, setOpenCaret] = useState(false)
 
     useEffect(() => {
-        console.log(value)
-        /* 
-            if(props.gameState === 'applyConfig')
-                onApplyDifficulty(value)
-        */
-    }, [value/*, props.gameState */])
+        if (gameState === 'pveConfig') onApplyDifficulty(+value)
+    }, [value, gameState, onApplyDifficulty])
 
     function optionSelected(option: Option) {
         setLabel(option.label)
@@ -40,20 +42,20 @@ function Selector(props: Options) {
     return (
         <div className="Selector">
             <div className="Selected" onClick={() => setOpenCaret(!openCaret)}>
-                { label }
+                {label}
                 <FaCaretDown />
             </div>
 
-            <div className={["Options", openCaret ? "Open": ""].join(' ')}>
+            <div className={["Options", openCaret ? "Open" : ""].join(' ')}>
                 {
-                    props.options.map(option => (
+                    options.map((option: Option) => (
                         <div
                             key={option.value}
                             className={
                                 ["Option", option.value === value && "Current"].join(' ')
                             }
                             onClick={() => optionSelected(option)}
-                        >{ option.label }</div>
+                        >{option.label}</div>
                     ))
                 }
             </div>
@@ -61,4 +63,16 @@ function Selector(props: Options) {
     )
 }
 
-export default Selector
+function mapStateToProps(state: StoreState) {
+    return {
+        gameState: state.gameState
+    }
+}
+
+function mapDispatchToProps(dispatch: any) {
+    return {
+        onApplyDifficulty: (diff: number) => dispatch(actions.onSetDifficulty(diff)) 
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Selector)
