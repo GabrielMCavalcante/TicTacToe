@@ -1,6 +1,10 @@
 import React from 'react'
 
-import { RouteChildrenProps } from 'react-router-dom'
+// Redux connection
+import { connect } from 'react-redux'
+
+// Actions
+import actions from 'store/actions/menu'
 
 // Components
 import Controls from 'components/UI/Controls'
@@ -8,12 +12,17 @@ import Controls from 'components/UI/Controls'
 // CSS styles
 import './styles.css'
 
-
-function Menu(props: RouteChildrenProps) {
+function Menu(props: any) {
 
     const config = [
-        { name: 'Player vs Player', onclick: () => {props.history.push('/pvp')/* set gamemode to pvpOptions */}},
-        { name: 'Player vs Computer', onclick: () => {props.history.push('/pve')/* set gamemode to pveOptions */ }}
+        { name: 'Player vs Player', onclick: () => {
+            props.onPvp()
+            props.history.push('/pvp')
+        }},
+        { name: 'Player vs Computer', onclick: () => {
+            props.onPve()
+            props.history.push('/pve')
+        }}
     ]    
 
     return (
@@ -23,4 +32,11 @@ function Menu(props: RouteChildrenProps) {
     )
 }
 
-export default Menu
+function mapDispatchToProps(dispatch: any) {
+    return {
+        onPvp: () => dispatch(actions.onSetPvp()),
+        onPve: () => dispatch(actions.onSetPve())
+    }
+}
+
+export default connect(null, mapDispatchToProps)(Menu)
