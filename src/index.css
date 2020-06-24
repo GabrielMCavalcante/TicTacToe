@@ -11,3 +11,181 @@ body {
   width: 100%;
   height: 100%;
 }
+
+@media screen and (max-width: 350px) {
+  .Header {
+    margin: 10px auto !important;
+  }
+  .Header h1 {
+    font-size: 3rem !important;
+  }
+  .configField, .Game {
+    width: auto !important;
+  }
+  .Controls {
+    flex-direction: column !important;
+    margin: 5px auto -5px !important;
+    width: auto !important;
+  }
+  .Controls .Control {
+    width: 85% !important;
+    height: 50px !important;
+    font-size: .85rem !important;
+    margin: 10px auto !important;
+  }
+  .GameResults .Options .Controls {
+    width: 350px !important;
+  }
+  :root {
+    --tableSize: 280px !important;
+  }
+}
+
+@media screen and (min-width: 351px) and (max-width: 411px) {
+  .App {
+    width: 100%;
+    height: 100%;
+  }
+  .Header {
+    margin: 10px auto !important;
+  }
+  .Header h1 {
+    font-size: 3rem !important;
+  }
+  .Controls {
+    width: 346px !important;
+  }
+  .Controls .Control {
+    font-size: 1rem !important;
+    width: 100% !important;
+  }
+  :root {
+    --tableSize: 300px !important;
+  }
+  .configField, .Game {
+    width: auto !important;
+  }
+  .GameResults .Options {
+    position: relative !important;
+    left: -24px !important;
+    width: 350px !important;
+  }
+}
+
+@media screen and (min-height: 730px) and (min-width: 412px) {
+  .Header {
+    margin-top: 25px !important;
+    margin-bottom: 15px !important;
+  }
+  .Header h1 {
+    font-size: 4rem !important;
+  }
+  .Controls {
+    width: 376px !important;
+  }
+  .Controls .Control {
+    font-size: 1.1rem !important;
+    width: 100% !important;
+  }
+  :root {
+    --tableSize: 350px !important;
+  }
+  .configField, .Game {
+    width: auto !important;
+  }
+  .GameResults {
+    width: 100% !important;
+  }
+  .Results {
+    width: 70% !important;
+    margin: 15px auto !important;
+  }
+  .Results .Options .Controls .Control {
+    width: 450px !important;
+  }
+  .Footer {
+    font-size: 1.3rem !important;
+  }
+  .Footer svg {
+    font-size: 1.5rem !important;
+  }
+}
+
+@media screen and (min-height: 800px) {
+  .Controls {
+    flex-direction: column;
+  }
+  .Controls .Control {
+    height: 60px;
+  }
+}
+
+@media screen and (min-width: 760px) and (min-height: 1000px) {
+  .Header h1 {
+    font-size: 6rem !important;
+  }
+  .Controls {
+    width: 450px !important;
+  }
+  .Controls .Control {
+    width: 100% !important;
+    height: 100px !important;
+    font-size: 2rem !important;
+  }
+  .Togglers {
+    width: 450px !important;
+    margin: auto !important;
+  }
+  .configField p {
+    font-size: 2.3rem !important;
+  }
+  .GameResults .Results .ResultField {
+    font-size: 2.5rem !important;
+}
+  .GameResults .Results .ResultField span {
+    font-size: 3rem !important;
+  }
+  .Togglers .Toggler {
+    width: 100% !important;
+    height: 80px !important;
+    font-size: 2rem !important;
+  }
+  :root {
+    --tableSize: 450px !important;
+  }
+  .GameTable .TableTile {
+    font-size: 8rem !important;
+  }
+  .Footer {
+    font-size: 2rem !important;
+  }
+  .Footer svg {
+    font-size: 2.1rem !important;
+  }
+}
+
+@media screen and (min-width: 1000px) and (min-height: 1300px) {
+  .Header h1 {
+    font-size: 8rem !important;
+  }
+  .Controls {
+    flex-direction: row;
+    width: 900px !important;
+  }
+  .GameResults .Options .Controls {
+    width: 970px !important;
+    flex-direction: row !important;
+  }
+  :root {
+    --tableSize: 700px !important;
+  }
+  .GameTable .TableTile {
+    font-size: 11rem !important;
+  }
+  .Footer {
+    font-size: 2.5rem !important;
+  }
+  .Footer svg {
+    font-size: 2.6rem !important;
+  }
+}
