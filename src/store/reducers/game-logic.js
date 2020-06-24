@@ -41,11 +41,33 @@ function gameLogicReducer(state = initialState, action) {
     function resetGame(state) {
         const reseted = {
             currentPlayer: state.firstPlayer,
-            currentTile: state.currentTile,
+            currentTile: state.firstTile,
             placedTiles: [],
             freeTiles: [0,1,2,3,4,5,6,7,8]
         }
         return updateState(state, reseted)
+    }
+
+    function placeTile(state, newTile) {
+        const updatedFreeTiles = state.freeTiles.filter(tile=>tile!==newTile.id)
+        
+        const updatedPlacedTiles = [...state.placedTiles, newTile]
+        
+        let nextPlayer = 'player1'
+
+        if(state.type === 'pvp') 
+            nextPlayer = state.currentPlayer === 'player1' ? 'player2' : 'player1'
+        else if(state.type === 'pve')
+            nextPlayer = state.currentPlayer === 'player' ? 'computer' : 'player2'
+
+        const update = { 
+            freeTiles: updatedFreeTiles, 
+            placedTiles: updatedPlacedTiles,
+            currentTile: state.currentTile === 'X' ? 'O' : 'X',
+            currentPlayer: nextPlayer
+        }
+        
+        return updateState(state, update)
     }
 
     switch (action.type) {
@@ -54,6 +76,7 @@ function gameLogicReducer(state = initialState, action) {
         case ActionTypes.CHANGE_TYPE: return changeType(state, action.config)
         case ActionTypes.RESET_STATE: return resetState()
         case ActionTypes.RESET_GAME: return resetGame(state)
+        case ActionTypes.PLACE_TILE: return placeTile(state, action.newTile)
         default: return state
     }
 }
