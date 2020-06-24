@@ -8,7 +8,7 @@ type DefaultSelected = "first" | "second"
 interface TogglerConfig {
     togglerConfig: {
         name: string,
-        onclick: (...params: any[]) => void
+        onclick: () => void
     }[], 
     defaultSelected: DefaultSelected
 }

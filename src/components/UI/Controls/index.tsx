@@ -10,7 +10,7 @@ interface Props {
     numberOfControls: number,
     controlConfig: {
         name: string,
-        onclick: (...params: any[]) => void
+        onclick: () => void
     }[]
 }
 
