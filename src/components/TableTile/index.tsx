@@ -3,55 +3,57 @@ import React, { useRef } from 'react'
 // CSS styles
 import './styles.css'
 
-/**
- * Has an ID
- * Redux will give which label this tile has based on its ID
- */
+// Redux connection
+import { connect } from 'react-redux'
 
-interface ID {
-    id: number
-}
+// Actions
+import actions from 'store/actions/tableTile'
 
-function TableTile(props: ID) {
+// Interfaces
+import StoreState from 'interfaces/store-state'
+
+function TableTile(props: any) {
 
     const tileRef = useRef(null)
-    let test: string = ''
+
     const classes = ["TableTile"]
 
-    function onTileClickHandler() {
+    if (props.gameState === 'playing')
+        if (props.freeTiles.find((el: number) => el === props.id) !== undefined)
+            classes.push("Placeable")
 
-        const el = tileRef.current as unknown as HTMLDivElement
-        if (el.classList.contains('Placeable')) {
-            console.log('Clicked tile with id ', props.id)
-            // onTableClick(props.id) <- redux dispatch
+    function onTileClickHandler() {
+        if (props.gameState === 'playing') {
+            const el = tileRef.current as unknown as HTMLDivElement
+            if (el.classList.contains('Placeable'))
+                props.onTileClick({ id: props.id, tile: props.currentTile })
         }
     }
 
-    if (Math.floor(Math.random() * 100) > 40) {
-        classes.push("Placeable")
-    }
-
-    if (classes.length === 1) {
-        if (Math.random() > 0.5) {
-            test = 'X'
-        } else test = 'O'
-    }
-
     function hoverStartHandler() {
-        const el = tileRef.current as unknown as HTMLDivElement
-        if (el.classList.contains('Placeable')) {
-            if (Math.random() > 0.5) {
-                el.innerHTML = 'X'
-            } else el.innerHTML = 'O'
+        if (props.gameState === 'playing') {
+            const el = tileRef.current as unknown as HTMLDivElement
+            if (el.classList.contains('Placeable')) {
+                el.innerHTML = props.currentTile
+            }
         }
     }
 
     function hoverEndHandler() {
-        const el = tileRef.current as unknown as HTMLDivElement
-        if (el.classList.contains('Placeable')) {
-            el.innerHTML = ''
+        if (props.gameState === 'playing') {
+            const el = tileRef.current as unknown as HTMLDivElement
+            if (el.classList.contains('Placeable')) {
+                el.innerHTML = ''
+            }
         }
     }
+
+    let thisTile = ''
+
+    props.placedTiles.forEach((tile: { id: number, tile: string }) => {
+        if (tile.id === props.id)
+            thisTile = tile.tile
+    })
 
     return (
         <div
@@ -60,8 +62,23 @@ function TableTile(props: ID) {
             onMouseLeave={hoverEndHandler}
             onClick={onTileClickHandler}
             className={classes.join(' ')}
-        >{test}</div>
+        >{thisTile}</div>
     )
 }
 
-export default TableTile
+function mapStateToProps(state: StoreState) {
+    return {
+        gameState: state.gameState,
+        currentTile: state.currentTile,
+        freeTiles: state.freeTiles,
+        placedTiles: state.placedTiles
+    }
+}
+
+function mapDispatchToProps(dispatch: any) {
+    return {
+        onTileClick: (tileId: number) => dispatch(actions.tileClick(tileId))
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(TableTile)
