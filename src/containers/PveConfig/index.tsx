@@ -1,5 +1,11 @@
 import React from 'react'
-import { RouteChildrenProps } from 'react-router-dom'
+
+// Redux connection
+import { connect } from 'react-redux'
+
+// Actions
+import actions from 'store/actions/gameConfig'
+import global from 'store/actions/global'
 
 // Components
 import Togglers from 'components/UI/Togglers'
@@ -9,21 +15,29 @@ import Selector from 'components/UI/Selector'
 // CSS styles
 import './styles.css'
 
-function PveConfig(props: RouteChildrenProps) {
+function PveConfig(props: any) {
+
+    let currentPlayer = 'player'
+    let currentTile = 'X'
 
     const firstConfig = [
-        { name: 'Player', onclick: () => { console.log('Player') } },
-        { name: 'Computer', onclick: () => { console.log('Computer') } }
+        { name: 'Player', onclick: () => currentPlayer = 'player' },
+        { name: 'Computer', onclick: () => currentPlayer = 'computer' }
     ]
 
     const playWithConfig = [
-        { name: 'X', onclick: () => { console.log('X') } },
-        { name: 'O', onclick: () => { console.log('O') } }
+        { name: 'X', onclick: () => currentTile = 'X' },
+        { name: 'O', onclick: () => currentTile = 'O' }
     ]
 
     const optionsConfig = [
-        { name: 'Start game', onclick: () => {props.history.push('/game'); console.log('Game started!') } },
-        { name: 'Return to menu', onclick: () => props.history.push('/') }
+        { name: 'Start game', onclick: startGame },
+        {
+            name: 'Return to menu', onclick: () => {
+                props.onReturnToMenu()
+                props.history.push('/')
+            }
+        }
     ]
 
     const difficultyConfig = [
@@ -33,6 +47,17 @@ function PveConfig(props: RouteChildrenProps) {
         { label: 'Very Hard', value: '0.90' },
         { label: 'Expert', value: '1.00' }
     ]
+
+    function startGame() {
+        props.onGameStart({
+            currentPlayer,
+            currentTile,
+            firstPlayer: currentPlayer,
+            firstTile: currentTile,
+            gameState: 'playing'
+        })
+        props.history.push('/game')
+    }
 
     return (
         <div className="PveConfig">
@@ -48,7 +73,7 @@ function PveConfig(props: RouteChildrenProps) {
 
             <div className="configField">
                 <p>Choose difficulty</p>
-                <Selector options={difficultyConfig} defaultValue="0.25"/>
+                <Selector options={difficultyConfig} defaultValue="0.25" />
             </div>
 
             <div className="configField">
@@ -61,4 +86,11 @@ function PveConfig(props: RouteChildrenProps) {
     )
 }
 
-export default PveConfig
+function mapDispatchToProps(dispatch: any) {
+    return {
+        onGameStart: (config: any) => dispatch(actions.onSetGameConfig(config)),
+        onReturnToMenu: () => dispatch(global.onReturnToMenu())
+    }
+}
+
+export default connect(null, mapDispatchToProps)(PveConfig)
