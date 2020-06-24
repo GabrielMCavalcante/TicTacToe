@@ -42,7 +42,7 @@ function Game(props: any) {
         }
     }, [gameState, onReturnToMenu, history])
 
-    let playerTurn = 'Player 1'
+    let playerTurn = 'Your'
 
     switch(props.currentPlayer) {
         case 'player1':
@@ -60,6 +60,7 @@ function Game(props: any) {
                 playerTurn = 'Computer'
                 break
             }
+        default: playerTurn = 'Your'
     }
 
     return (
