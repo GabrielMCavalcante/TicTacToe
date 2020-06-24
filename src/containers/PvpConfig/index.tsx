@@ -4,7 +4,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 
 // Actions
-import actions from 'store/actions/pvpConfig'
+import actions from 'store/actions/gameConfig'
 import global from 'store/actions/global'
 
 // Components
