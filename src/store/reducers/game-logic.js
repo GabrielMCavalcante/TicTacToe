@@ -14,7 +14,7 @@ const initialState = {
     difficulty: 0.5,
     placedTiles: [],
     freeTiles: [0, 1, 2, 3, 4, 5, 6, 7, 8],
-    winner: 'player1'
+    tie: false
 }
 
 function gameLogicReducer(state = initialState, action) {
@@ -23,11 +23,8 @@ function gameLogicReducer(state = initialState, action) {
         return updateState(state, gameConfig)
     }
 
-    function endGame(state) {
-        return updateState(state, {
-            gameState: 'results',
-            winner: state.currentPlayer
-        })
+    function endGame(state, tie) {
+        return updateState(state, { gameState: 'results', tie })
     }
 
     function changeType(state, config) {
@@ -43,30 +40,21 @@ function gameLogicReducer(state = initialState, action) {
             currentPlayer: state.firstPlayer,
             currentTile: state.firstTile,
             placedTiles: [],
-            freeTiles: [0,1,2,3,4,5,6,7,8]
+            freeTiles: [0, 1, 2, 3, 4, 5, 6, 7, 8]
         }
         return updateState(state, reseted)
     }
 
     function placeTile(state, newTile) {
-        const updatedFreeTiles = state.freeTiles.filter(tile=>tile!==newTile.id)
-        
+        const updatedFreeTiles = state.freeTiles.filter(tile => tile !== newTile.id)
+
         const updatedPlacedTiles = [...state.placedTiles, newTile]
-        
-        let nextPlayer = 'player'
 
-        if(state.type === 'pvp') 
-            nextPlayer = state.currentPlayer === 'player1' ? 'player2' : 'player1'
-        else if(state.type === 'pve')
-            nextPlayer = state.currentPlayer === 'player' ? 'computer' : 'player'
-
-        const update = { 
-            freeTiles: updatedFreeTiles, 
-            placedTiles: updatedPlacedTiles,
-            currentTile: state.currentTile === 'X' ? 'O' : 'X',
-            currentPlayer: nextPlayer
+        const update = {
+            freeTiles: updatedFreeTiles,
+            placedTiles: updatedPlacedTiles
         }
-        
+
         return updateState(state, update)
     }
 
@@ -74,14 +62,36 @@ function gameLogicReducer(state = initialState, action) {
         return updateState(state, { difficulty: diff })
     }
 
+    function changeTurn(state) {
+        let nextPlayer = 'player'
+
+        if (state.type === 'pvp')
+            nextPlayer = state.currentPlayer === 'player1' ? 'player2' : 'player1'
+        else if (state.type === 'pve')
+            nextPlayer = state.currentPlayer === 'player' ? 'computer' : 'player'
+
+        const shiftedTurn = {
+            currentTile: state.currentTile === 'X' ? 'O' : 'X',
+            currentPlayer: nextPlayer
+        }
+
+        return updateState(state, shiftedTurn)
+    }
+
+    function changeGamestate(state, newGamestate) {
+        return updateState(state, { gameState: newGamestate })
+    }
+
     switch (action.type) {
         case ActionTypes.START_GAME: return startGame(state, action.gameConfig)
-        case ActionTypes.END_GAME: return endGame(state)
+        case ActionTypes.END_GAME: return endGame(state, action.tie)
         case ActionTypes.CHANGE_TYPE: return changeType(state, action.config)
         case ActionTypes.RESET_STATE: return resetState()
         case ActionTypes.RESET_GAME: return resetGame(state)
         case ActionTypes.PLACE_TILE: return placeTile(state, action.newTile)
         case ActionTypes.CHANGE_DIFFICULTY: return changeDifficulty(state, action.diff)
+        case ActionTypes.CHANGE_TURN: return changeTurn(state)
+        case ActionTypes.CHANGE_GAMESTATE: return changeGamestate(state, action.newGamestate)
         default: return state
     }
 }
