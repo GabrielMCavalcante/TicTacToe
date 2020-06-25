@@ -31,6 +31,12 @@
     font-size: 2rem;
 }
 
+.GameResults .Results .ResultField p span {
+    font-family: inherit;
+    font-weight: inherit;
+    font-size: inherit;
+}
+
 .GameResults .Options {
     width: 100%;
     display: flex;
