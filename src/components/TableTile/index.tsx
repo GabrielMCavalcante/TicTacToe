@@ -8,6 +8,7 @@ import { connect } from 'react-redux'
 
 // Actions
 import actions from 'store/actions/tableTile'
+import global from 'store/actions/global'
 
 // Interfaces
 import StoreState from 'interfaces/store-state'
@@ -25,8 +26,10 @@ function TableTile(props: any) {
     function onTileClickHandler() {
         if (props.gameState === 'playing') {
             const el = tileRef.current as unknown as HTMLDivElement
-            if (el.classList.contains('Placeable'))
+            if (el.classList.contains('Placeable')) {
                 props.onTileClick({ id: props.id, tile: props.currentTile })
+                props.onPlayerPlayed(true)
+            }
         }
     }
 
@@ -77,7 +80,8 @@ function mapStateToProps(state: StoreState) {
 
 function mapDispatchToProps(dispatch: any) {
     return {
-        onTileClick: (tileId: number) => dispatch(actions.tileClick(tileId))
+        onTileClick: (tileId: number) => dispatch(actions.tileClick(tileId)),
+        onPlayerPlayed: (played: boolean) => dispatch(global.onChangePlayerPlayed(played))
     }
 }
 
