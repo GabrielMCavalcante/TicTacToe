@@ -14,7 +14,8 @@ const initialState = {
     difficulty: 0.5,
     placedTiles: [],
     freeTiles: [0, 1, 2, 3, 4, 5, 6, 7, 8],
-    tie: false
+    tie: false,
+    playerPlayed: false
 }
 
 function gameLogicReducer(state = initialState, action) {
@@ -82,6 +83,10 @@ function gameLogicReducer(state = initialState, action) {
         return updateState(state, { gameState: newGamestate })
     }
 
+    function changePlayerPlayed(state, played) {
+        return updateState(state, { playerPlayed: played })
+    }
+
     switch (action.type) {
         case ActionTypes.START_GAME: return startGame(state, action.gameConfig)
         case ActionTypes.END_GAME: return endGame(state, action.tie)
@@ -92,6 +97,7 @@ function gameLogicReducer(state = initialState, action) {
         case ActionTypes.CHANGE_DIFFICULTY: return changeDifficulty(state, action.diff)
         case ActionTypes.CHANGE_TURN: return changeTurn(state)
         case ActionTypes.CHANGE_GAMESTATE: return changeGamestate(state, action.newGamestate)
+        case ActionTypes.CHANGE_PLAYER_PLAYED: return changePlayerPlayed(state, action.played)
         default: return state
     }
 }
