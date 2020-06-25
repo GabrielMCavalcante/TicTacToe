@@ -14,5 +14,5 @@ export default interface StoreState {
     difficulty: number,
     placedTiles: number[],
     freeTiles: number[],
-    winner: number
+    tie: boolean
 }
