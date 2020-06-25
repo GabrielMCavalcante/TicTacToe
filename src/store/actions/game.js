@@ -9,5 +9,5 @@ const actions = {
 export default {
     onGameWon: () => dispatch => dispatch(actions.onGameWon()),
     onGameTied: () => dispatch => dispatch(actions.onGameTied()),
-    onChangeTurn: () => dispatch => dispatch(actions.onChangeTurn()), 
+    onChangeTurn: () => dispatch => dispatch(actions.onChangeTurn())
 }
