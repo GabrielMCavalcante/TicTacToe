@@ -58,7 +58,7 @@ function GameResults(props: any) {
     ]
 
     function resetScoreboard() {
-        if(type === 'pvp') localStorage.setItem('pvpScoreboard', JSON.stringify({
+        if (type === 'pvp') localStorage.setItem('pvpScoreboard', JSON.stringify({
             player1: 0,
             player2: 0
         }))
@@ -85,12 +85,14 @@ function GameResults(props: any) {
                 }))
             }
 
-            currentScoreboard = JSON.parse(localStorage.getItem('pvpScoreboard')!)
+            if (!tie) {
+                currentScoreboard = JSON.parse(localStorage.getItem('pvpScoreboard')!)
 
-            localStorage.setItem('pvpScoreboard', JSON.stringify({
-                ...currentScoreboard,
-                [currentPlayer]: currentScoreboard[currentPlayer] + 1
-            }))
+                localStorage.setItem('pvpScoreboard', JSON.stringify({
+                    ...currentScoreboard,
+                    [currentPlayer]: currentScoreboard[currentPlayer] + 1
+                }))
+            }
 
             scoreboard = Object.values(JSON.parse(localStorage.getItem('pvpScoreboard')!))
         }
@@ -101,12 +103,15 @@ function GameResults(props: any) {
                     computer: 0
                 }))
             }
-            currentScoreboard = JSON.parse(localStorage.getItem('pveScoreboard')!)
 
-            localStorage.setItem('pveScoreboard', JSON.stringify({
-                ...currentScoreboard,
-                [currentPlayer]: currentScoreboard[currentPlayer] + 1
-            }))
+            if (!tie) {
+                currentScoreboard = JSON.parse(localStorage.getItem('pveScoreboard')!)
+
+                localStorage.setItem('pveScoreboard', JSON.stringify({
+                    ...currentScoreboard,
+                    [currentPlayer]: currentScoreboard[currentPlayer] + 1
+                }))
+            }
 
             scoreboard = Object.values(JSON.parse(localStorage.getItem('pveScoreboard')!))
         }
@@ -144,22 +149,22 @@ function GameResults(props: any) {
 
     return (
         <div className="GameResults">
-            <h2>{ resultMessage }</h2>
+            <h2>{resultMessage}</h2>
 
             <div className="Results">
                 <div className="ResultField">
-                    <p className="FieldTitle">{ showcasePlayers[0] }</p>
+                    <p className="FieldTitle">{showcasePlayers[0]}</p>
                     <p className="FieldContent">
-                        <span ref={score1Ref}>{ scoreboard[0] }</span> victories
+                        <span ref={score1Ref}>{scoreboard[0]}</span> victories
                     </p>
                 </div>
 
                 <div className="FieldSeparator"></div>
 
                 <div className="ResultField">
-                    <p className="FieldTitle">{ showcasePlayers[1] }</p>
+                    <p className="FieldTitle">{showcasePlayers[1]}</p>
                     <p className="FieldContent">
-                        <span ref={score2Ref}>{ scoreboard[1] }</span> victories
+                        <span ref={score2Ref}>{scoreboard[1]}</span> victories
                     </p>
                 </div>
             </div>
