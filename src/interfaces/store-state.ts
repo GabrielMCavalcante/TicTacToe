@@ -14,5 +14,6 @@ export default interface StoreState {
     difficulty: number,
     placedTiles: number[],
     freeTiles: number[],
-    tie: boolean
+    tie: boolean,
+    playerPlayed: boolean
 }
