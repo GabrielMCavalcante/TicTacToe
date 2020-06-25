@@ -96,10 +96,6 @@ body {
   .GameResults {
     width: 100% !important;
   }
-  .Results {
-    width: 70% !important;
-    margin: 15px auto !important;
-  }
   .Results .Options .Controls .Control {
     width: 450px !important;
   }
@@ -141,7 +137,7 @@ body {
   }
   .GameResults .Results .ResultField {
     font-size: 2.5rem !important;
-}
+  }
   .GameResults .Results .ResultField span {
     font-size: 3rem !important;
   }
