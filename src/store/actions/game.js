@@ -1,9 +1,13 @@
 import ActionTypes from './actionTypes'
 
 const actions = {
-    restartGame: () => ({ type: ActionTypes.RESET_GAME })
+    onGameWon: () => ({ type: ActionTypes.END_GAME, tie: false }),
+    onGameTied: () => ({ type: ActionTypes.END_GAME, tie: true }),
+    onChangeTurn: () => ({ type: ActionTypes.CHANGE_TURN })
 }
 
 export default {
-    onRestart: () => dispatch => dispatch(actions.restartGame())
+    onGameWon: () => dispatch => dispatch(actions.onGameWon()),
+    onGameTied: () => dispatch => dispatch(actions.onGameTied()),
+    onChangeTurn: () => dispatch => dispatch(actions.onChangeTurn()), 
 }
