@@ -38,6 +38,11 @@ function GameResults(props: any) {
         onChangeGamestate
     } = props
 
+    function gotoMenu() {
+        onReturnToMenu()
+        history.push('/')
+    }
+
     const resultOptionsConfig = [
         {
             name: 'Play again', onclick: () => {
@@ -51,21 +56,21 @@ function GameResults(props: any) {
         {
             name: 'Return to menu', onclick: () => {
                 loaded = false
-                onReturnToMenu()
-                history.push('/')
+                gotoMenu()
             }
         }
     ]
 
+    function resetScores(identifier: string, players: string[]) {
+        localStorage.setItem(identifier, JSON.stringify({
+            [players[0]]: 0,
+            [players[1]]: 0
+        }))
+    }
+
     function resetScoreboard() {
-        if (type === 'pvp') localStorage.setItem('pvpScoreboard', JSON.stringify({
-            player1: 0,
-            player2: 0
-        }))
-        else if (type === 'pve') localStorage.setItem('pveScoreboard', JSON.stringify({
-            player: 0,
-            computer: 0
-        }))
+        if (type === 'pvp') resetScores('pvpScoreboard', ['player1', 'player2'])
+        else if (type === 'pve') resetScores('pveScoreboard', ['player', 'computer'])
 
         const references = [score1Ref, score2Ref]
         references.forEach(ref => {
@@ -74,52 +79,39 @@ function GameResults(props: any) {
         })
     }
 
+    function createScoreboard(identifier: string, players: string[]) {
+        let currentScoreboard: ScoreBoard
+        if (!localStorage.getItem(identifier)) {
+            localStorage.setItem(identifier, JSON.stringify({
+                [players[0]]: 0,
+                [players[1]]: 0
+            }))
+        }
+
+        if (!tie) {
+            currentScoreboard = JSON.parse(localStorage.getItem(identifier)!)
+
+            localStorage.setItem(identifier, JSON.stringify({
+                ...currentScoreboard,
+                [currentPlayer]: currentScoreboard[currentPlayer] + 1
+            }))
+        }
+
+        scoreboard = Object.values(JSON.parse(localStorage.getItem(identifier)!))
+    }
+
     if (gameState === 'results' && !loaded) {
         loaded = true
-        let currentScoreboard: ScoreBoard
-        if (type === 'pvp') {
-            if (!localStorage.getItem('pvpScoreboard')) {
-                localStorage.setItem('pvpScoreboard', JSON.stringify({
-                    player1: 0,
-                    player2: 0
-                }))
-            }
 
-            if (!tie) {
-                currentScoreboard = JSON.parse(localStorage.getItem('pvpScoreboard')!)
+        if (type === 'pvp')
+            createScoreboard('pvpScoreboard', ['player1', 'player2'])
 
-                localStorage.setItem('pvpScoreboard', JSON.stringify({
-                    ...currentScoreboard,
-                    [currentPlayer]: currentScoreboard[currentPlayer] + 1
-                }))
-            }
+        else if (type === 'pve')
+            createScoreboard('pveScoreboard', ['player', 'computer'])
 
-            scoreboard = Object.values(JSON.parse(localStorage.getItem('pvpScoreboard')!))
-        }
-        else if (type === 'pve') {
-            if (!localStorage.getItem('pveScoreboard')) {
-                localStorage.setItem('pveScoreboard', JSON.stringify({
-                    player: 0,
-                    computer: 0
-                }))
-            }
-
-            if (!tie) {
-                currentScoreboard = JSON.parse(localStorage.getItem('pveScoreboard')!)
-
-                localStorage.setItem('pveScoreboard', JSON.stringify({
-                    ...currentScoreboard,
-                    [currentPlayer]: currentScoreboard[currentPlayer] + 1
-                }))
-            }
-
-            scoreboard = Object.values(JSON.parse(localStorage.getItem('pveScoreboard')!))
-        }
-        else {
-            onReturnToMenu()
-            history.push('/')
-        }
-    }
+        else gotoMenu()
+    } 
+    else if (gameState !== 'results') gotoMenu()
 
     let showcasePlayers = ['Player 1', 'Player 2']
     if (type === 'pve') showcasePlayers = ['Player', 'Computer']
@@ -155,7 +147,7 @@ function GameResults(props: any) {
                 <div className="ResultField">
                     <p className="FieldTitle">{showcasePlayers[0]}</p>
                     <p className="FieldContent">
-                        <span ref={score1Ref}>{scoreboard[0]}</span> victories
+                        <span ref={score1Ref}>{scoreboard && scoreboard[0]}</span> victories
                     </p>
                 </div>
 
@@ -164,7 +156,7 @@ function GameResults(props: any) {
                 <div className="ResultField">
                     <p className="FieldTitle">{showcasePlayers[1]}</p>
                     <p className="FieldContent">
-                        <span ref={score2Ref}>{scoreboard[1]}</span> victories
+                        <span ref={score2Ref}>{scoreboard && scoreboard[1]}</span> victories
                     </p>
                 </div>
             </div>

@@ -31,7 +31,7 @@ function Selector(props: any) {
 
     useEffect(() => {
         if (gameState === 'pveConfig') onApplyDifficulty(+value)
-    }, [value, gameState, onApplyDifficulty])
+    }, [value, gameState]) // eslint-disable-line
 
     function optionSelected(option: Option) {
         setLabel(option.label)

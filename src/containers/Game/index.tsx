@@ -38,66 +38,47 @@ function Game(props: any) {
         onPlayerPlayed
     } = props
 
+    function gotoMenu() {
+        onReturnToMenu()
+        history.push('/')
+    }
+
     const gameOptionsConfig = [
-        { name: 'Restart Game', onclick: () => onRestartGame() },
-        {
-            name: 'Return to Menu', onclick: () => {
-                onReturnToMenu()
-                history.push('/')
-            }
-        }
+        { name: 'Restart Game', onclick: onRestartGame },
+        { name: 'Return to Menu', onclick: gotoMenu }
     ]
 
     useEffect(() => {
         if (gameState === 'results') history.push('/game/results')
-        else if (gameState !== 'playing') {
-            onReturnToMenu()
-            history.push('/')
-        }
+        else if (gameState !== 'playing') gotoMenu()
     }, [gameState]) // eslint-disable-line
+
+    function verifyTurnShift() {
+        if (currentPlayer !== 'computer') {
+            if (playerPlayed) {
+                onPlayerPlayed(false)
+                onChangeTurn()
+            }
+        }
+        else onChangeTurn()
+    }
 
     // Game logic
     useEffect(() => {
         if (placedTiles.length >= 5) {
-            // Verifying win
             let win = false
 
-            //Rows
-            for (let i = 0; i < 9; i += 3) {
-                // Verifying if current row is filled
-                const filled =
-                    placedTiles.filter(
-                        (tile: { id: number, tile: string }) =>
-                            tile.id === i || tile.id === (i + 1) || tile.id === (i + 2)
-                    )
-
-                if (filled.length === 3) {
-                    // Verifying if all row tiles have the same value
-                    const firstTile = filled[0].tile
-
-                    let equal = 0
-
-                    filled.forEach((tile: { tile: string }) => {
-                        if (tile.tile === firstTile) equal++
-                    })
-
-                    // If they are all equal, then win is true, else just continue
-                    if (equal === 3) win = true
-                }
+            function getFilled(checkTiles: number[]) {
+                return placedTiles.filter(
+                    (tile: { id: number, tile: string }) => checkTiles.includes(tile.id)
+                )
             }
 
-            // Columns 
-            if (!win) {
-                for (let i = 0; i < 3; i++) {
-                    // Verifying if current column is filled
-                    const filled =
-                        placedTiles.filter(
-                            (tile: { id: number, tile: string }) =>
-                                tile.id === i || tile.id === (i + 3) || tile.id === (i + 6)
-                        )
+            function verifyRowCol(checkTileInc: number, loopLimit: number, loopInc: number) {
+                for (let i = 0; i < loopLimit; i += loopInc) {
+                    const filled = getFilled([i, i + checkTileInc, i + (2 * checkTileInc)])
 
                     if (filled.length === 3) {
-                        // Verifying if all column tiles have the same value
                         const firstTile = filled[0].tile
 
                         let equal = 0
@@ -106,22 +87,18 @@ function Game(props: any) {
                             if (tile.tile === firstTile) equal++
                         })
 
-                        // If they are all equal, then win is true, else just continue
-                        if (equal === 3) win = true
+                        if (equal === 3) {
+                            win = true
+                            break
+                        }
                     }
                 }
             }
 
-            // First diagonal
-            if (!win) {
-                const filled =
-                    placedTiles.filter(
-                        (tile: { id: number, tile: string }) =>
-                            tile.id === 0 || tile.id === 4 || tile.id === 8
-                    )
+            function verifyDiagonal(diagonalTiles: number[]) {
+                const filled = getFilled(diagonalTiles)
 
                 if (filled.length === 3) {
-                    // Verifying if all diagonal tiles have the same value
                     const firstTile = filled[0].tile
 
                     let equal = 0
@@ -130,52 +107,27 @@ function Game(props: any) {
                         if (tile.tile === firstTile) equal++
                     })
 
-                    // If they are all equal, then win is true, else just continue
                     if (equal === 3) win = true
                 }
             }
+
+            //Rows
+            verifyRowCol(1, 9, 3)
+
+            // Columns 
+            if (!win) verifyRowCol(3, 3, 1)
+
+            // First diagonal
+            if (!win) verifyDiagonal([0, 4, 8])
 
             // Second diagonal
-            if (!win) {
-                const filled =
-                    placedTiles.filter(
-                        (tile: { id: number, tile: string }) =>
-                            tile.id === 2 || tile.id === 4 || tile.id === 6
-                    )
-
-                if (filled.length === 3) {
-                    // Verifying if all diagonal tiles have the same value
-                    const firstTile = filled[0].tile
-
-                    let equal = 0
-
-                    filled.forEach((tile: { tile: string }) => {
-                        if (tile.tile === firstTile) equal++
-                    })
-
-                    // If they are all equal, then win is true, else just continue
-                    if (equal === 3) win = true
-                }
-            }
+            if (!win) verifyDiagonal([2, 4, 6])
 
             if (win) onGameWon()
             else if (placedTiles.length === 9) onGameTied()
-            else {
-                if (currentPlayer !== 'computer') {
-                    if (playerPlayed) {
-                        onPlayerPlayed(false)
-                        onChangeTurn()
-                    }
-                } else onChangeTurn()
-            }
-        } else {
-            if (currentPlayer !== 'computer') {
-                if (playerPlayed) {
-                    onPlayerPlayed(false)
-                    onChangeTurn()
-                }
-            } else onChangeTurn()
-        }
+            else verifyTurnShift()
+            
+        } else verifyTurnShift()
     }, [placedTiles]) // eslint-disable-line
 
     const verifySpecifiedWin = useCallback((player: string) => {
@@ -184,64 +136,23 @@ function Game(props: any) {
 
         const thisTile = player === currentPlayer ? currentTile : otherTile
 
-        // Verifying if computer can win with current turn
         let played = false
 
-        //Rows
-        for (let i = 0; i < 9; i += 3) {
-            // Verifying if current row is filled with 2 pc tiles and one empty
-            let freeTile = [i, i + 1, i + 2]
-            const filled =
-                placedTiles.filter(
-                    (tile: { id: number, tile: string }) => {
-                        freeTile = freeTile.filter(t => t !== tile.id)
-                        return (
-                            tile.id === i ||
-                            tile.id === (i + 1) ||
-                            tile.id === (i + 2)
-                        )
-                    }
-                )
-
-            if (filled.length === 2) {
-                // Verifying if all row tiles have the same value
-                let equal = 0
-
-                filled.forEach((tile: { tile: string }) => {
-                    if (tile.tile === thisTile) equal++
-                })
-
-                if (equal === 2) {
-                    if (Math.floor(Math.random() * 100) <= (+difficulty * 100)) {
-                        const tileIndex = freeTile[0]
-                        onPlaceTile({ id: tileIndex, tile: currentTile })
-
-                        played = true
-                        break
-                    }
+        function filterFilled(tilesId: number[]) {
+            let freetile = [...tilesId]
+            return [placedTiles.filter(
+                (tile: { id: number, tile: string }) => {
+                    freetile = freetile.filter(t => t !== tile.id)
+                    return tilesId.includes(tile.id)
                 }
-            }
+            ), freetile]
         }
 
-        // Columns 
-        if (!played) {
-            for (let i = 0; i < 3; i++) {
-                // Verifying if current column is filled with 2 pc tiles and one empty
-                let freeTile = [i, i + 3, i + 6]
-                const filled =
-                    placedTiles.filter(
-                        (tile: { id: number, tile: string }) => {
-                            freeTile = freeTile.filter(t => t !== tile.id)
-                            return (
-                                tile.id === i ||
-                                tile.id === (i + 3) ||
-                                tile.id === (i + 6)
-                            )
-                        }
-                    )
+        function verifyPlay(checkTileInc: number, loopLimit: number, loopInc: number) {
+            for (let i = 0; i < loopLimit; i += loopInc) {
+                const [filled, freetile] = filterFilled([i, i + checkTileInc, i + (2 * checkTileInc)])
 
                 if (filled.length === 2) {
-                    // Verifying if all column tiles have the same value
                     let equal = 0
 
                     filled.forEach((tile: { tile: string }) => {
@@ -250,10 +161,8 @@ function Game(props: any) {
 
                     if (equal === 2) {
                         if (Math.floor(Math.random() * 100) <= (+difficulty * 100)) {
-                            const tileIndex = freeTile[0]
+                            const tileIndex = freetile[0]
                             onPlaceTile({ id: tileIndex, tile: currentTile })
-                            if (placedTiles.length <= 4)
-                                onChangeTurn()
                             played = true
                             break
                         }
@@ -262,23 +171,10 @@ function Game(props: any) {
             }
         }
 
-        // First diagonal
-        if (!played) {
-            let freeTile = [0, 4, 8]
-            const filled =
-                placedTiles.filter(
-                    (tile: { id: number, tile: string }) => {
-                        freeTile = freeTile.filter(t => t !== tile.id)
-                        return (
-                            tile.id === 0 ||
-                            tile.id === 4 ||
-                            tile.id === 8
-                        )
-                    }
-                )
+        function verifyDiagonal(diagTiles: number[]) {
+            const [filled, freetile] = filterFilled(diagTiles)
 
             if (filled.length === 2) {
-                // Verifying if all diagonal tiles have the same value
                 let equal = 0
 
                 filled.forEach((tile: { tile: string }) => {
@@ -287,49 +183,33 @@ function Game(props: any) {
 
                 if (equal === 2) {
                     if (Math.floor(Math.random() * 100) <= (+difficulty * 100)) {
-                        const tileIndex = freeTile[0]
+                        const tileIndex = freetile[0]
                         onPlaceTile({ id: tileIndex, tile: currentTile })
-
                         played = true
                     }
                 }
             }
         }
+
+        //Rows
+        verifyPlay(1, 9, 3)
+
+        // Columns 
+        if (!played) verifyPlay(3, 3, 1)
+
+        // First diagonal
+        if (!played) verifyDiagonal([0, 4, 8])
 
         // Second diagonal
-        if (!played) {
-            let freeTile = [2, 4, 6]
-            const filled =
-                placedTiles.filter(
-                    (tile: { id: number, tile: string }) => {
-                        freeTile = freeTile.filter(t => t !== tile.id)
-                        return (
-                            tile.id === 2 ||
-                            tile.id === 4 ||
-                            tile.id === 6
-                        )
-                    }
-                )
+        if (!played) verifyDiagonal([2, 4, 6])
 
-            if (filled.length === 2) {
-                // Verifying if all diagonal tiles have the same value
-                let equal = 0
-
-                filled.forEach((tile: { tile: string }) => {
-                    if (tile.tile === thisTile) equal++
-                })
-
-                if (equal === 2) {
-                    if (Math.floor(Math.random() * 100) <= (+difficulty * 100)) {
-                        const tileIndex = freeTile[0]
-                        onPlaceTile({ id: tileIndex, tile: currentTile })
-                        played = true
-                    }
-                }
-            }
-        }
         return played
     }, [placedTiles, currentTile]) // eslint-disable-line
+
+    function playRandomly() {
+        const randomTileIndex = freeTiles[Math.floor(Math.random() * freeTiles.length)]
+        onPlaceTile({ id: randomTileIndex, tile: currentTile })
+    }
 
     // Computer logic
     useEffect(() => {
@@ -341,15 +221,9 @@ function Game(props: any) {
 
                     played = verifySpecifiedWin('player')
 
-                    if (!played) {
-                        const randomTileIndex = freeTiles[Math.floor(Math.random() * freeTiles.length)]
-                        onPlaceTile({ id: randomTileIndex, tile: currentTile })
-                    }
+                    if (!played) playRandomly()
                 }
-            } else {
-                const randomTileIndex = freeTiles[Math.floor(Math.random() * freeTiles.length)]
-                onPlaceTile({ id: randomTileIndex, tile: currentTile })
-            }
+            } else playRandomly()
         }
     }, [currentPlayer])// eslint-disable-line
 

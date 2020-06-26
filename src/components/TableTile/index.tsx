@@ -33,20 +33,11 @@ function TableTile(props: any) {
         }
     }
 
-    function hoverStartHandler() {
+    function setElContent(content: string) {
         if (props.gameState === 'playing') {
             const el = tileRef.current as unknown as HTMLDivElement
             if (el.classList.contains('Placeable')) {
-                el.innerHTML = props.currentTile
-            }
-        }
-    }
-
-    function hoverEndHandler() {
-        if (props.gameState === 'playing') {
-            const el = tileRef.current as unknown as HTMLDivElement
-            if (el.classList.contains('Placeable')) {
-                el.innerHTML = ''
+                el.innerHTML = content
             }
         }
     }
@@ -61,8 +52,8 @@ function TableTile(props: any) {
     return (
         <div
             ref={tileRef}
-            onMouseEnter={hoverStartHandler}
-            onMouseLeave={hoverEndHandler}
+            onMouseEnter={() => setElContent(props.currentTile)}
+            onMouseLeave={() => setElContent('')}
             onClick={onTileClickHandler}
             className={classes.join(' ')}
         >{thisTile}</div>
