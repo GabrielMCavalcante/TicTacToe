@@ -7,6 +7,11 @@
 This project is a simple adaptation of the popular game Tic Tac Toe, where players play with knots and crosses (O and X), trying
 to have a row, a column or a diagonal full of their chosen tile. In this project you can also play against the computer with a simulated AI.
 
+## Languages
+Read this file in your preferred language: 
+- [English](README.md)
+- [Português](README.pt.md)
+
 #### Main technologies used
 
 - React
