@@ -1,9 +1,6 @@
 // Action types
 import ActionTypes from 'store/actions/actionTypes'
 
-// Utilities
-import { updateState } from './utility'
-
 const initialState = {
     gameState: 'menu',
     currentPlayer: 'player1',
@@ -20,6 +17,10 @@ const initialState = {
 
 function gameLogicReducer(state = initialState, action) {
 
+    function updateState(oldState, newValues) {
+        return { ...oldState, ...newValues }
+    }
+
     function startGame(state, gameConfig) {
         return updateState(state, gameConfig)
     }
@@ -28,22 +29,20 @@ function gameLogicReducer(state = initialState, action) {
         return updateState(state, { gameState: 'results', tie })
     }
 
-    function changeType(state, config) {
-        return updateState(state, config)
-    }
-
-    function resetState() {
-        return initialState
-    }
-
     function resetGame(state) {
         const reseted = {
             currentPlayer: state.firstPlayer,
             currentTile: state.firstTile,
             placedTiles: [],
-            freeTiles: [0, 1, 2, 3, 4, 5, 6, 7, 8]
+            freeTiles: [0, 1, 2, 3, 4, 5, 6, 7, 8],
+            tie: false,
+            playerPlayed: false
         }
         return updateState(state, reseted)
+    }
+
+    function resetState() {
+        return initialState
     }
 
     function placeTile(state, newTile) {
@@ -57,6 +56,10 @@ function gameLogicReducer(state = initialState, action) {
         }
 
         return updateState(state, update)
+    }
+
+    function changeType(state, config) {
+        return updateState(state, config)
     }
 
     function changeDifficulty(state, diff) {
@@ -90,10 +93,10 @@ function gameLogicReducer(state = initialState, action) {
     switch (action.type) {
         case ActionTypes.START_GAME: return startGame(state, action.gameConfig)
         case ActionTypes.END_GAME: return endGame(state, action.tie)
-        case ActionTypes.CHANGE_TYPE: return changeType(state, action.config)
-        case ActionTypes.RESET_STATE: return resetState()
         case ActionTypes.RESET_GAME: return resetGame(state)
+        case ActionTypes.RESET_STATE: return resetState()
         case ActionTypes.PLACE_TILE: return placeTile(state, action.newTile)
+        case ActionTypes.CHANGE_TYPE: return changeType(state, action.config)
         case ActionTypes.CHANGE_DIFFICULTY: return changeDifficulty(state, action.diff)
         case ActionTypes.CHANGE_TURN: return changeTurn(state)
         case ActionTypes.CHANGE_GAMESTATE: return changeGamestate(state, action.newGamestate)
