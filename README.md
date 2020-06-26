@@ -7,7 +7,7 @@
 This project is a simple adaptation of the popular game Tic Tac Toe, where players play with knots and crosses (O and X), trying
 to have a row, a column or a diagonal full of their chosen tile. In this project you can also play against the computer with a simulated AI.
 
-## Languages
+#### Languages
 Read this file in your preferred language: 
 - [English](README.md)
 - [Português](README.pt.md)
@@ -27,7 +27,7 @@ Read this file in your preferred language:
 - [About](#about)
 
 [Back To The Top](#tic-tac-toe)<br>
-[Back To Table of Contents](#index)
+[Back To Index](#index)
 
 
 ## Installation on local machine
@@ -38,7 +38,7 @@ Read this file in your preferred language:
 1. After installation, run ```npm start``` or ```yarn start``` to start development server.
 
 [Back To The Top](#tic-tac-toe)<br>
-[Back To Table of Contents](#index)
+[Back To Index](#index)
 
 ## Play Demo
 If you want to test out this application, go to this [link](www.google.com)
@@ -56,7 +56,7 @@ the steps below and you will be good to go.
 ![vs computer gameplay](src/github/vsPCgame.gif)
 
 [Back To The Top](#tic-tac-toe)<br>
-[Back To Table of Contents](#index)
+[Back To Index](#index)
 
 ## License
 
@@ -83,7 +83,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
 [Back To The Top](#tic-tac-toe)<br>
-[Back To Table of Contents](#index)
+[Back To Index](#index)
 
 ## About
 
@@ -92,4 +92,4 @@ SOFTWARE.
 - LinkedIn - [Gabriel Cavalcante](https://www.linkedin.com/in/gabriel-cavalcante-4182061a2)
 
 [Back To The Top](#tic-tac-toe)<br>
-[Back To Table of Contents](#index)
+[Back To Index](#index)
