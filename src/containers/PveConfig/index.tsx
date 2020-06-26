@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 
 // Redux connection
 import { connect } from 'react-redux'
@@ -15,10 +15,22 @@ import Selector from 'components/UI/Selector'
 // CSS styles
 import './styles.css'
 
+// Interfaces
+import StoreState from 'interfaces/store-state'
+
 function PveConfig(props: any) {
 
     let currentPlayer = 'player'
     let currentTile = 'X'
+
+    function gotoMenu() {
+        props.onReturnToMenu()
+        props.history.push('/')
+    }
+
+    useEffect(() => {
+        if (props.gameState !== 'pveConfig' || props.type !== 'pve') gotoMenu()
+    }, []) //eslint-disable-line
 
     const firstConfig = [
         { name: 'Player', onclick: () => currentPlayer = 'player' },
@@ -32,12 +44,7 @@ function PveConfig(props: any) {
 
     const optionsConfig = [
         { name: 'Start game', onclick: startGame },
-        {
-            name: 'Return to menu', onclick: () => {
-                props.onReturnToMenu()
-                props.history.push('/')
-            }
-        }
+        { name: 'Return to menu', onclick: gotoMenu }
     ]
 
     const difficultyConfig = [
@@ -86,6 +93,13 @@ function PveConfig(props: any) {
     )
 }
 
+function mapStateToProps(state: StoreState) {
+    return {
+        gameState: state.gameState,
+        type: state.type
+    }
+}
+
 function mapDispatchToProps(dispatch: any) {
     return {
         onGameStart: (config: any) => dispatch(actions.onSetGameConfig(config)),
@@ -93,4 +107,4 @@ function mapDispatchToProps(dispatch: any) {
     }
 }
 
-export default connect(null, mapDispatchToProps)(PveConfig)
+export default connect(mapStateToProps, mapDispatchToProps)(PveConfig)

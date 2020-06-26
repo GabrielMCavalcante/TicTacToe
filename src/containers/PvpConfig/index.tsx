@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 
 // Redux connection
 import { connect } from 'react-redux'
@@ -14,10 +14,22 @@ import Controls from 'components/UI/Controls'
 // CSS styles
 import './styles.css'
 
+// Interfaces
+import StoreState from 'interfaces/store-state'
+
 function PvpConfig(props: any) {
 
     let currentPlayer = 'player1'
     let currentTile = 'X'
+
+    function gotoMenu() {
+        props.onReturnToMenu()
+        props.history.push('/')
+    }
+
+    useEffect(() => {
+        if (props.gameState !== 'pvpConfig' || props.type !== 'pvp') gotoMenu()
+    }, []) //eslint-disable-line
 
     const firstConfig = [
         { name: 'Player 1', onclick: () => currentPlayer = 'player1' },
@@ -31,12 +43,7 @@ function PvpConfig(props: any) {
 
     const optionsConfig = [
         { name: 'Start game', onclick: startGame },
-        {
-            name: 'Return to menu', onclick: () => {
-                props.onReturnToMenu()
-                props.history.push('/')
-            }
-        }
+        { name: 'Return to menu', onclick: gotoMenu }
     ]
 
     function startGame() {
@@ -72,6 +79,13 @@ function PvpConfig(props: any) {
     )
 }
 
+function mapStateToProps(state: StoreState) {
+    return {
+        gameState: state.gameState,
+        type: state.type
+    }
+}
+
 function mapDispatchToProps(dispatch: any) {
     return {
         onGameStart: (config: any) => dispatch(actions.onSetGameConfig(config)),
@@ -79,4 +93,4 @@ function mapDispatchToProps(dispatch: any) {
     }
 }
 
-export default connect(null, mapDispatchToProps)(PvpConfig)
+export default connect(mapStateToProps, mapDispatchToProps)(PvpConfig)
