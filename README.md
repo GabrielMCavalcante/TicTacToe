@@ -41,7 +41,7 @@ Read this file in your preferred language:
 [Back To Index](#index)
 
 ## Play Demo
-If you want to test out this application, go to this [link](www.google.com)
+If you want to test out this application, go to this [link](https://gabrielmcavalcante.github.io/TicTacToe/)
 
 ## How To Use
 Playing tic tac toe is very simple, and in this project it is not different. Just follow
