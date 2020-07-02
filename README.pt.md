@@ -42,7 +42,7 @@ Leia este arquivo no seu idioma preferido:
 [Voltar ao sumário](#sumario)
 
 ## Jogar Demo
-Se você quiser testar este aplicativo, acesse este [link](www.google.com)
+Se você quiser testar este aplicativo, acesse este [link](https://gabrielmcavalcante.github.io/TicTacToe/)
 
 ## Como usar
 Jogar tic tac toe é muito simples, e neste projeto não é diferente. Apenas siga
