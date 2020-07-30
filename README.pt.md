@@ -22,14 +22,14 @@ Leia este arquivo no seu idioma preferido:
 
 ## Sumário
 
-- [Instalação na máquina local](#instalacao-na-maquina-local)
+- [Instalação na máquina local](#instalação-na-máquina-local)
 - [Jogar Demo](#jogar-demo)
 - [Como usar](#como-usar)
-- [Licença](#licenca)
+- [Licença](#licença)
 - [Sobre](#sobre)
 
 [Voltar ao topo](#tic-tac-toe)<br>
-[Voltar ao sumário](#sumario)
+[Voltar ao sumário](#sumário)
 
 
 ## Instalação na máquina local
@@ -41,7 +41,7 @@ Leia este arquivo no seu idioma preferido:
 
 
 [Voltar ao topo](#tic-tac-toe)<br>
-[Voltar ao sumário](#sumario)
+[Voltar ao sumário](#sumário)
 
 ## Jogar Demo
 Se você quiser testar este aplicativo, acesse este [link](https://gabrielmcavalcante.github.io/TicTacToe/)
@@ -59,7 +59,7 @@ as etapas abaixo e você estará pronto para jogar com seus amigos.
 ![vs computer gameplay](src/github/vsPCgame.gif)
 
 [Voltar ao topo](#tic-tac-toe)<br>
-[Voltar ao sumário](#sumario)
+[Voltar ao sumário](#sumário)
 
 ## Licença
 
@@ -86,7 +86,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
 [Voltar ao topo](#tic-tac-toe)<br>
-[Voltar ao sumário](#sumario)
+[Voltar ao sumário](#sumário)
 
 ## Sobre
 
@@ -95,4 +95,4 @@ SOFTWARE.
 - LinkedIn - [Gabriel Cavalcante](https://linkedin.com/in/gabrielmcavalcante)
 
 [Voltar ao topo](#tic-tac-toe)<br>
-[Voltar ao sumário](#sumario)
+[Voltar ao sumário](#sumário)
