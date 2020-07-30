@@ -1,4 +1,6 @@
-# <img src="src/github/logo.png" alt="Project Logo" width="30" height="30" /> Tic Tac Toe
+<p align="center"><img src="src/github/logo.png" alt="Project Logo" width="100" height="100" /></p>
+
+# Tic Tac Toe
 
 ![Project Image](src/github/projectImg.png)
 
